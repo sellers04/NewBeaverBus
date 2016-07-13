@@ -13,6 +13,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -22,28 +24,26 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
     public static final String TAG = "MapsActivity";
 
+    @Inject
+    Retrofit retrofit;
+
 
     private GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((MyApp) getApplication()).getNetComponent().inject(this);
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified whenw the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        testRetrofit();
+        otherTestRetrofit();
     }
 
-    public void testRetrofit(){
-        String baseUrl = "http://www.osushuttles.com/Services/JSONPRelay.svc/";
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
+    public void otherTestRetrofit(){
         OsuShuttleService service = retrofit.create(OsuShuttleService.class);
 
         Call<List<Stop>> stops = service.getStops();
@@ -59,8 +59,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Log.d(TAG, "Failure");
             }
         });
-
-
     }
 
     /**
