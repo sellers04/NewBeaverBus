@@ -12,7 +12,7 @@ import dagger.Component;
 @Component(modules={AppModule.class, NetModule.class})
 public interface NetComponent {
     void inject(MapsActivity activity);
-    // void inject(MyFragment fragment);
+    void inject(NetworkRequestor networkRequestor);
     // void inject(MyService service);
 
 }

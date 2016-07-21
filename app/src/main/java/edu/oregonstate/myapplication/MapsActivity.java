@@ -35,30 +35,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         ((MyApp) getApplication()).getNetComponent().inject(this);
         setContentView(R.layout.activity_maps);
-        // Obtain the SupportMapFragment and get notified whenw the map is ready to be used.
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-        otherTestRetrofit();
+        Log.d(TAG, "Hello World");
+        testNetworkRequestor();
     }
 
-    public void otherTestRetrofit(){
-        OsuShuttleService service = retrofit.create(OsuShuttleService.class);
+    public void testNetworkRequestor(){
+        NetworkRequestor netReq = new NetworkRequestor();
+        Log.d(TAG, "Starting repeating Task");
+        netReq.startRepeatingTask();
 
-        Call<List<Stop>> stops = service.getStops();
-
-        stops.enqueue(new Callback<List<Stop>>() {
-            @Override
-            public void onResponse(Call<List<Stop>> call, Response<List<Stop>> response) {
-                Log.d(TAG, "Success: " + response);
-            }
-
-            @Override
-            public void onFailure(Call<List<Stop>> call, Throwable t) {
-                Log.d(TAG, "Failure");
-            }
-        });
     }
 
     /**

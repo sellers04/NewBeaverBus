@@ -11,4 +11,7 @@ import retrofit2.http.GET;
 public interface OsuShuttleService {
     @GET("GetStops")
     Call<List<Stop>> getStops();
+
+    @GET("GetMapVehiclePoints?ApiKey=8882812681")
+    Call<List<VehiclePoint>> getMapVehiclePoints();
 }
